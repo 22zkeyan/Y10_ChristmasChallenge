@@ -12,6 +12,7 @@
             int[] naughty_score = new int[names.Length];
             char[] santa = { 's', 'a', 'n', 't', 'a' };
             char[] grinch = { 'g', 'r', 'i', 'n', 'c', 'h' };
+            double[] overall_nice = new double[names.Length];
 
             for (int i = 0; i < names.Length; i++)
             {
@@ -23,8 +24,8 @@
                         nice_score[i]++;
                     }
                 }
-                string firstName = names[i].Substring(0, names[i].IndexOf(' ')).ToLower();
-                string lastName = names[i].Substring(names[i].IndexOf(' ') + 1).ToLower();
+                string firstName = names[i].Substring(0, names[i].IndexOf(' ')).ToLower().Trim();
+                string lastName = names[i].Substring(names[i].IndexOf(' ') + 1).ToLower().Trim();
                 nice_score[i] += lastName.Length;
                 if (firstName.Length % 2 == 0 && lastName.Length % 2 == 0)
                 {
@@ -61,11 +62,15 @@
                         naughty_score[i] += 2;
                     }
                 }
+
+                overall_nice[i] = Math.Round((Convert.ToDouble(nice_score[i]) / (Convert.ToDouble(naughty_score[i]) + Convert.ToDouble(nice_score[i]))) * 100, 0);
+
+                Console.WriteLine($"{names[i]}: \n- Nice score: {nice_score[i]} \n- Naughty score: {naughty_score[i]} \n- Overall nice score: {overall_nice[i]}%");
             }
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            NaughtyNiceScore();
         }
     }
 }
